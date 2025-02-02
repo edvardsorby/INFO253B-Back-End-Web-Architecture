@@ -1,1 +1,10 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/G2xRUaVe)
+
+# Description
+This Python program program provides a To Do list to help keeping track of everyday tasks. The program can be used through the terminal, where the user can add new tasks or mark them as done. The program can be used for anything, from remembering to complete homework to making sure you have purchased everything you need for your holiday.
+
+# Errors encountered
+The first struggle that was encountered was simply getting the Python environment to work properly, specificly with Anaconda. After making sure the correct Python interpreter was configured and selected, the development could begin. Here, the biggest challenge was designing a simple but user friendly flow for navigating the program's features, which was solved with the help of a while loop, inputs and if statements.
+
+# Design choices
+When the user first starts the program they see a list of To Do tasks. They can then choose to either mark one of them as completed, add a new one or quit the application. This navigation is made possible simply by letting the user input a number between 1 and 3. If they choose to mark a task as completed, they then use the same mechanic to select a specific task. If the user wants to create a new one, an instance of the  class ```Task``` is created with the attributes ```title```, ```description``` and ```due_date```. This object is then appended to a list where all the tasks are stored, which can be iterated through. This approach ensures a simple, but effective way for the user to manage their everyday tasks. Exception handling has not been taken into account, as it was not a priority for this task. The user is in this case responsible for making sure they only select valid menu items for example. The attributes of the ```Task``` class are treated as strings, except for the ```Date``` object which has to follow the provided format to be handled correctly.
