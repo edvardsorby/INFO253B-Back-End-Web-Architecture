@@ -5,6 +5,7 @@ class Task:
     self.due_date = due_date
 
 todo_list = []
+running = True
 
 todo_list.append(Task("Walk the dog", "Take it for a walk around the lake", "2025-02-10"))
 todo_list.append(Task("Buy groceries", "Remember to buy potatoes, rice, salmon and bread", "2025-02-03"))
@@ -12,7 +13,7 @@ todo_list.append(Task("Take car to the dealer", "Yearly warranty inspection", "2
 
 print("\nWelcome to the To Do list program :)\n")
 
-while(True):
+while(running):
 
   print("----------------------------")
   print("\nYour current tasks:")
@@ -29,6 +30,7 @@ while(True):
   print("\nSelect action")
   print("(1) Complete a task")
   print("(2) Add new task")
+  print("(3) Quit")
   menu_item = int(input())
 
   if (menu_item == 1):
@@ -41,4 +43,6 @@ while(True):
 
     task = Task(title, description, due_date)
     todo_list.append(task)
+  elif (menu_item == 3):
+    running = False
 
