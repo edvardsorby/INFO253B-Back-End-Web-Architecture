@@ -7,8 +7,6 @@ song_library = None
 with open('library.json', 'r') as file:
   song_library = json.load(file)
 
-print(song_library)
-
 @app.route('/songs')
 def songs():
  return jsonify({"result": song_library}), 200
@@ -48,8 +46,6 @@ def edit_song():
 
  if request_data:
 
-  print(request_data["title"])
-
   for song in song_library:
     if song["id"] == request_data["id"]:
       song["title"] = request_data["title"]
@@ -69,9 +65,7 @@ def edit_song():
 def remove_song(id):
  
   for song in song_library:
-    print(song["id"])
     if song["id"] == int(id):
-      print("FOUND IT")
       song_library.remove(song)
       with open("library.json", "w") as outfile:
         json.dump(song_library, outfile, indent=2)
