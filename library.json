@@ -26,5 +26,33 @@
     "artist": "blink-182",
     "genre": "rock",
     "year": 2017
+  },
+  {
+    "id": 5,
+    "title": "Wildfire",
+    "artist": "blink-182",
+    "genre": "rock",
+    "year": 2017
+  },
+  {
+    "id": 6,
+    "title": "Hello",
+    "artist": "blink-182",
+    "genre": "rock",
+    "year": 2017
+  },
+  {
+    "id": 7,
+    "title": "Hello1",
+    "artist": "blink-182",
+    "genre": "rock",
+    "year": 2017
+  },
+  {
+    "id": 8,
+    "title": "Hello2",
+    "artist": "blink-182",
+    "genre": "rock",
+    "year": 2017
   }
 ]
