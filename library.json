@@ -1,0 +1,30 @@
+[
+  {
+    "id": 0,
+    "title": "ANTHEM PART 3",
+    "artist": "blink-182",
+    "genre": "pop-punk",
+    "year": 2023
+  },
+  {
+    "id": 1,
+    "title": "Hurricane",
+    "artist": "I Prevail",
+    "genre": "rock",
+    "year": 2020
+  },
+  {
+    "id": 2,
+    "title": "Without You",
+    "artist": "Avicii",
+    "genre": "EDM",
+    "year": 2017
+  },
+  {
+    "id": 4,
+    "title": "6/8",
+    "artist": "blink-182",
+    "genre": "rock",
+    "year": 2017
+  }
+]
