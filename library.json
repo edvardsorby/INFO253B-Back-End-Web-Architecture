@@ -1,58 +1,32 @@
 [
   {
-    "id": 0,
-    "title": "ANTHEM PART 3",
+    "title": "CHILDHOOD",
     "artist": "blink-182",
     "genre": "pop-punk",
     "year": 2023
   },
   {
-    "id": 1,
     "title": "Hurricane",
     "artist": "I Prevail",
     "genre": "rock",
     "year": 2020
   },
   {
-    "id": 2,
-    "title": "Without You",
+    "title": "Levels",
     "artist": "Avicii",
     "genre": "EDM",
-    "year": 2017
+    "year": 2011
   },
   {
-    "id": 4,
-    "title": "6/8",
-    "artist": "blink-182",
-    "genre": "rock",
-    "year": 2017
-  },
-  {
-    "id": 5,
     "title": "Wildfire",
     "artist": "blink-182",
     "genre": "rock",
     "year": 2017
   },
   {
-    "id": 6,
-    "title": "Hello",
-    "artist": "blink-182",
-    "genre": "rock",
-    "year": 2017
-  },
-  {
-    "id": 7,
-    "title": "Hello1",
-    "artist": "blink-182",
-    "genre": "rock",
-    "year": 2017
-  },
-  {
-    "id": 8,
-    "title": "Hello2",
-    "artist": "blink-182",
-    "genre": "rock",
-    "year": 2017
+    "title": "Glorie",
+    "artist": "Vinni",
+    "genre": "Hip-Hop",
+    "year": 2021
   }
 ]
