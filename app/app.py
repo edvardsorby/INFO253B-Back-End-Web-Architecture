@@ -1,68 +1,107 @@
+import os
 from flask import Flask, request, jsonify
 from urllib.parse import urljoin
 import requests
-app = Flask(__name__)
+from models.command import CommandModel
+from db import db
+from sqlalchemy.exc import IntegrityError, SQLAlchemyError
+from flask_smorest import Blueprint
 
-command_db = {
-  "shrug": "http://localhost:5001",
-  "command_2": "server_url_2",
-  "command_3": "server_url_3"
-}
+from schemas import CommandSchema
+
+blp = Blueprint("commands", __name__, description="Stores APIs")
+
+def create_app(db_url = None):
+    app = Flask(__name__)
+    app.config["SQLALCHEMY_DATABASE_URI"] = db_url or os.getenv("DATABASE_URL", "sqlite:///data.db")
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    db.init_app(app)
+
+    with app.app_context():
+        db.create_all()
+     
+    return app
+
+app = create_app()
 
 @app.post('/chat')
 def chat():
-  request_data = request.get_json()
+    request_data = request.get_json()
 
-  if request_data:
+    if request_data:
 
-    chat = request_data["chat"]
-    command = None
-    message = chat
-    
-    if chat[0] == "/":
-      parts = chat[1:].split(" ", 1)
-      command = parts[0]
-      message = parts[1]
+        chat = request_data["chat"]
+        command = None
+        message = chat
+        
+        if chat[0] == "/":
+            parts = chat[1:].split(" ", 1)
+            command = parts[0]
+            message = parts[1]
 
-      print(command)
-      print(message)
-    
-      if command == "admin":
-        parts = message.split(" ")
-        operation = parts[0]
-        print(operation)
-        if operation == "add":
-          server_name = parts[1]
-          server_url = parts[2]
-          command_db[server_name] = server_url
-          return "", 201
-        elif operation == "update":
-          server_name = parts[1]
-          server_url = parts[2]
-          command_db[server_name] = server_url
-          return "", 200
-        elif operation == "list":
-          return {"command_db": command_db}, 200
-        elif operation == "delete":
-          server_name = parts[1]
-          command_db.pop(server_name)
-          return "", 204
-      elif command in command_db:
+            print(command)
+            print(message)
+            
+            if command == "admin":
+                parts = message.split(" ")
+                operation = parts[0]
+                print(operation)
+                if operation == "add":
+                    server_name = parts[1]
+                    server_url = parts[2]
+                    
+                    return insert(CommandModel(command=server_name, url=server_url))
 
-        return send_chat(command_db[command], message)
+                elif operation == "update":
+                    server_name = parts[1]
+                    server_url = parts[2]
 
-      else:
-        return f"The command {command} is not registered.", 404
-
-
-    chat_response = {
-      "chat": f"{command}: {message}"
-    }
-    
-    return jsonify(chat_response), 201
-  else:
-    return jsonify({'message': 'No data received'}), 400
+                    return update(server_name, server_url)
+                elif operation == "list":
+                    return get()
+                elif operation == "delete":
+                    server_name = parts[1]
+                    return delete(server_name)                    
+            else:
+                registered_command = CommandModel.query.get(command)
+                if registered_command:
+                    return send_chat(registered_command.url, message)
+                else:
+                    return f"The command {command} is not registered.", 404
+    else:
+        return jsonify({'message': 'No data received'}), 400
   
+def insert(command):
+    try:
+        db.session.add(command)
+        db.session.commit()
+        return "", 201
+    except IntegrityError:
+        return "Command or url already exists", 400
+    except SQLAlchemyError:
+        return "An error occurred while inserting the command", 500
+    
+@blp.response(200, CommandSchema(many=True))
+def get():
+    return CommandModel.query.all()
+
+def delete(command_name):
+    command = CommandModel.query.get_or_404(command_name)
+    db.session.delete(command)
+    db.session.commit()
+    return "", 204
+
+def update(server_name, new_url):
+    command = CommandModel.query.get(server_name)
+    if command:
+        command.url = new_url
+    try:
+        db.session.add(command)
+        db.session.commit()
+        return "", 200
+    except SQLAlchemyError:
+        return "Error occured while updating command", 500
+
 
 def send_chat(server_url, chat):
     full_url = urljoin(server_url, "/chat")
