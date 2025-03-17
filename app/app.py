@@ -50,7 +50,7 @@ def chat():
                     server_name = parts[1]
                     server_url = parts[2]
                     
-                    return insert(CommandModel(command=server_name, url=server_url))
+                    return insert(CommandModel(command=server_name, server_url=server_url))
 
                 elif operation == "update":
                     server_name = parts[1]
@@ -65,7 +65,7 @@ def chat():
             else:
                 registered_command = CommandModel.query.get(command)
                 if registered_command:
-                    return send_chat(registered_command.url, message)
+                    return send_chat(registered_command.server_url, message)
                 else:
                     return f"The command {command} is not registered.", 404
     else:
@@ -94,7 +94,7 @@ def delete(command_name):
 def update(server_name, new_url):
     command = CommandModel.query.get(server_name)
     if command:
-        command.url = new_url
+        command.server_url = new_url
     try:
         db.session.add(command)
         db.session.commit()
