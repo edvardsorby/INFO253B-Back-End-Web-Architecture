@@ -5,11 +5,6 @@ import requests
 from models.command import CommandModel
 from db import db
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
-from flask_smorest import Blueprint
-
-from schemas import CommandSchema
-
-blp = Blueprint("commands", __name__, description="Stores APIs")
 
 def create_app(db_url = None):
     app = Flask(__name__)
@@ -38,14 +33,10 @@ def chat():
             parts = chat[1:].split(" ", 1)
             command = parts[0]
             message = parts[1]
-
-            print(command)
-            print(message)
             
             if command == "admin":
                 parts = message.split(" ")
                 operation = parts[0]
-                print(operation)
                 if operation == "add":
                     server_name = parts[1]
                     server_url = parts[2]
@@ -61,35 +52,42 @@ def chat():
                     return get()
                 elif operation == "delete":
                     server_name = parts[1]
-                    return delete(server_name)                    
+                    return delete(server_name) 
+                else:
+                    return {"chat": f"Invalid admin command '{operation}'"}, 200                   
             else:
                 registered_command = CommandModel.query.get(command)
                 if registered_command:
                     return send_chat(registered_command.server_url, message)
                 else:
-                    return f"The command {command} is not registered.", 404
+                    return {"chat": f"The command {command} is not registered."}, 200
+        else:
+            return {"chat": f"Missing '/'"}, 200
     else:
-        return jsonify({'message': 'No data received'}), 400
+        return {'chat': 'No data received'}, 400
   
 def insert(command):
     try:
         db.session.add(command)
         db.session.commit()
-        return "", 201
+        return {"chat": ""}, 201
     except IntegrityError:
-        return "Command or url already exists", 400
+        return {"chat": "Command or url already exists"}, 400
     except SQLAlchemyError:
-        return "An error occurred while inserting the command", 500
+        return {"chat": "An error occurred while inserting the command"}, 500
     
-@blp.response(200, CommandSchema(many=True))
 def get():
-    return CommandModel.query.all()
+    commands = CommandModel.query.all()
+    command_list = ""
+    for command in commands:
+        command_list += f"\n/{command.command} -> {command.server_url}"
+    return {"chat": command_list}, 200
 
 def delete(command_name):
     command = CommandModel.query.get_or_404(command_name)
     db.session.delete(command)
     db.session.commit()
-    return "", 204
+    return {"chat": ""}, 200
 
 def update(server_name, new_url):
     command = CommandModel.query.get(server_name)
@@ -98,9 +96,9 @@ def update(server_name, new_url):
     try:
         db.session.add(command)
         db.session.commit()
-        return "", 200
+        return {"chat": ""}, 200
     except SQLAlchemyError:
-        return "Error occured while updating command", 500
+        return {"chat": "Error occured while updating command"}, 500
 
 
 def send_chat(server_url, chat):

@@ -3,4 +3,3 @@ python-dotenv
 requests
 sqlalchemy
 flask-sqlalchemy
-flask-smorest
