@@ -16,11 +16,8 @@ cd search
 pip install -e .
 ```
 
-## Usage
-
 ## Development
 
-To enforce style/formatting, I added a pre-commit hook to check for some stuff and run ruff, one of the most popular Python linters.
 ```bash
 pip install pre-commit
 pre-commit install
