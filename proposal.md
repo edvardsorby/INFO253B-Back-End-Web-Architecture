@@ -1,6 +1,6 @@
 # Team: Revamping Course Catalog
 
-**Team Members**:  
+**Team Members**:
 Natalia Juarez, Janelle Lin, Jonathan Lu, Vikramsingh Rathod, Edvard Soerby
 
 ---
@@ -15,7 +15,7 @@ We aim to improve this experience by building a semantic search API that allows 
 
 ### System Overview
 
-- **Database**: NoSQL (e.g., MongoDB or DynamoDB) for persisting course metadata and user search logs  
+- **Database**: NoSQL (e.g., MongoDB or DynamoDB) for persisting course metadata and user search logs
 - **Deployment**: Containerized using Docker
 
 ---
@@ -23,15 +23,14 @@ We aim to improve this experience by building a semantic search API that allows 
 ## External APIs & Tools
 To obtain and store embeddings of course information, we plan to use an embedding service and a hosted vector database like Voyage AI and Pinecone to simplify the system. Additionally, to set up the agentic course recommender, we plan to use OpenAI API and GPT-4o-mini for cost effectiveness. Ideally, we’d be able to use the Berkeley SIS Course API directly to get course information; however, it has specific permission requirements which would make it difficult so we will start with using a snapshot from the BerkeleyTime team instead.
 
-- **Embeddings & Vector Storage**:  
-  - [Voyage AI](https://voyageai.com) (for embedding services)  
+- **Embeddings & Vector Storage**:
+  - [Voyage AI](https://voyageai.com) (for embedding services)
   - [Pinecone](https://www.pinecone.io) (for hosted vector database)
 
-- **LLM & Agentic Recommender**:  
-  - [OpenAI API](https://openai.com/api)  
+- **LLM & Agentic Recommender**:
+  - [OpenAI API](https://openai.com/api)
   - **GPT-4o-mini** (for cost-effective reasoning)
 
-- **Course Data Source**:  
-  - Primary: Berkeley SIS Course API (if access is possible)  
+- **Course Data Source**:
+  - Primary: Berkeley SIS Course API (if access is possible)
   - Alternative: Data snapshot from [BerkeleyTime](https://berkeleytime.com)
-
