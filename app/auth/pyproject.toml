@@ -8,7 +8,8 @@ dependencies = [
     "uvicorn",
     "python-jose[cryptography]",
     "python-multipart",
-    "passlib[bcrypt]"
+    "passlib[bcrypt]",
+    "python-dotenv"
 ]
 
 [build-system]
