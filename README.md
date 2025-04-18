@@ -18,6 +18,8 @@ pip install -e .
 
 ## Development
 
+Make a copy of `.env.example` as your `.env` file and fill in the relevant sections.
+
 ```bash
 pip install pre-commit
 pre-commit install
@@ -28,7 +30,7 @@ pre-commit run --all-files # if you want to test it manually
 
 In the search directory
 ```bash
-uvicorn src.main:app --reload
+uvicorn src.search.main:app --reload
 ```
 
 Then go to /docs

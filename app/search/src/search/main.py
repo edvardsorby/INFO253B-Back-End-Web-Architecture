@@ -1,6 +1,20 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 
-app = FastAPI()
+from search.api.main import api_router
+from search.db import close_mongo_connection, connect_to_mongo
+
+
+@asynccontextmanager
+async def lifespan(_app: FastAPI):
+    await connect_to_mongo()
+    yield
+    await close_mongo_connection()
+
+
+app = FastAPI(lifespan=lifespan)
+app.include_router(api_router)
 
 
 @app.get("/")
