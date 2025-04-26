@@ -1,3 +1,5 @@
+from uuid import UUID
+
 from pydantic import BaseModel
 
 
@@ -14,3 +16,13 @@ class Course(BaseModel):
 
 class SearchOut(Course):
     score: float
+
+
+class MessagesIn(BaseModel):
+    query: str
+    conv_id: UUID | None
+
+
+class MessagesOut(BaseModel):
+    response: str
+    conv_id: UUID

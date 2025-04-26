@@ -1,4 +1,5 @@
 import csv
+import os
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import tqdm
@@ -6,6 +7,7 @@ import voyageai
 from dotenv import load_dotenv
 from pymongo import MongoClient
 from pymongo.operations import SearchIndexModel
+
 from search.models import Course
 
 COURSE_DOC_TEMPLATE = """\
@@ -13,8 +15,7 @@ Course Title
 {title}
 
 Course Description
-{description}
-"""
+{description}"""
 
 
 def add_course_embedding(
@@ -87,7 +88,6 @@ def load_course_data(csv_file_path: str) -> list[Course]:
 def parse_csv_to_mongodb(
     csv_file_path, mongo_connection_uri, database_name, collection_name
 ):
-    load_dotenv()
     client = MongoClient(mongo_connection_uri)
     collection = client[database_name][collection_name]
 
@@ -117,8 +117,9 @@ def parse_csv_to_mongodb(
 
 
 if __name__ == "__main__":
+    load_dotenv()
     csv_file_path = "bt_courses.csv"
-    mongo_connection_uri = "mongodb+srv://rathodvikram44:rathodvikram44@allcourses.l4lqk7e.mongodb.net/?retryWrites=true&w=majority&appName=allCourses"
+    mongo_connection_uri = os.getenv("MONGO_URI_COURSES")
     database_name = "allcourses"
     collection_name = "allcourses_with_embedding"
 

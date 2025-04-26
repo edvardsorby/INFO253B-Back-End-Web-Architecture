@@ -9,6 +9,11 @@ dependencies = [
     "python-dotenv",
     "voyageai",
     "pymongo",
+    "langgraph",
+    "langchain",
+    "langchain-openai",
+    "langchain-checkpoint-mongodb",
+    "pydantic-settings",
 ]
 
 [build-system]

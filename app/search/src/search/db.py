@@ -3,7 +3,8 @@ from typing import Annotated
 from fastapi import Depends
 from pymongo import AsyncMongoClient
 
-MONGO_URI = "mongodb+srv://rathodvikram44:rathodvikram44@allcourses.l4lqk7e.mongodb.net/?retryWrites=true&w=majority&appName=allCourses"
+from search.config import settings
+
 client: AsyncMongoClient | None = None
 
 database_name = "allcourses"
@@ -12,7 +13,7 @@ collection_name = "allcourses_with_embedding"
 
 async def connect_to_mongo():
     global client
-    client = AsyncMongoClient(MONGO_URI)
+    client = AsyncMongoClient(settings.mongo_uri_courses)
 
 
 async def close_mongo_connection():
