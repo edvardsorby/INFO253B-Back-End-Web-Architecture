@@ -11,7 +11,7 @@ from pymongo import AsyncMongoClient
 from typing_extensions import TypedDict
 
 from search.config import settings
-from search.services import retrieve_courses_tool
+from search.services.course_search import retrieve_courses_tool
 
 #############
 # Define graph components
