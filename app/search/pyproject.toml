@@ -12,7 +12,7 @@ dependencies = [
     "langgraph",
     "langchain",
     "langchain-openai",
-    "langchain-checkpoint-mongodb",
+    "langgraph-checkpoint-mongodb",
     "pydantic-settings",
 ]
 
