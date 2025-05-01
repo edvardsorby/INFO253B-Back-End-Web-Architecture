@@ -35,8 +35,8 @@ services:
     environment:
       - VOYAGE_API_KEY=${VOYAGE_API_KEY}
       - OPENAI_API_KEY=${OPENAI_API_KEY}
-      - MONGO_URI_COURSES=mongodb://user:pass@mongo_courses:27019/?directConnection=true
-      - MONGO_URI_CHAT=mongodb://user:pass@mongo_chat:27020/?directConnection=true
+      - MONGO_URI_COURSES=mongodb://user:pass@mongo_courses:27017/?directConnection=true
+      - MONGO_URI_CHAT=mongodb://user:pass@mongo_chat:27017/?directConnection=true
       - LANGSMITH_TRACING=${LANGSMITH_TRACING}
       - LANGSMITH_PROJECT=${LANGSMITH_PROJECT}
       - LANGSMITH_API_KEY=${LANGSMITH_API_KEY}
