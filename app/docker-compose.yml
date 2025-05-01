@@ -1,29 +1,53 @@
-version: "3.9"
-
 services:
+  mongo_courses:
+    image: mongodb/mongodb-atlas-local:latest
+    container_name: mongo_courses
+    ports:
+      - 27019:27017
+    volumes:
+      - courses-data:/data/db
+      - courses-config:/data/configdb
+    environment:
+      - MONGODB_INITDB_ROOT_USERNAME=user
+      - MONGODB_INITDB_ROOT_PASSWORD=pass
+
+  mongo_chat:
+    image: mongodb/mongodb-atlas-local:latest
+    container_name: mongo_chat
+    ports:
+      - 27020:27017
+    volumes:
+      - chat-data:/data/db
+      - chat-config:/data/configdb
+    environment:
+      - MONGODB_INITDB_ROOT_USERNAME=user
+      - MONGODB_INITDB_ROOT_PASSWORD=pass
+
   app:
     build:
       context: .
       dockerfile: Dockerfile
+    image: course_rec:latest
     ports:
       - "8000:8000"
+    env_file:
+      - ../.env
     environment:
       - VOYAGE_API_KEY=${VOYAGE_API_KEY}
       - OPENAI_API_KEY=${OPENAI_API_KEY}
-      - MONGO_URI_COURSES=${MONGO_URI_COURSES}
-      - MONGO_URI_CHAT=${MONGO_URI_CHAT}
+      - MONGO_URI_COURSES=mongodb://user:pass@mongo_courses:27019/?directConnection=true
+      - MONGO_URI_CHAT=mongodb://user:pass@mongo_chat:27020/?directConnection=true
       - LANGSMITH_TRACING=${LANGSMITH_TRACING}
       - LANGSMITH_PROJECT=${LANGSMITH_PROJECT}
       - LANGSMITH_API_KEY=${LANGSMITH_API_KEY}
       - LANGSMITH_ENDPOINT=${LANGSMITH_ENDPOINT}
+      - SECRET_KEY=${SECRET_KEY}
     depends_on:
-      - mongo
+      - mongo_courses
+      - mongo_chat
 
-  mongo:
-    image: mongo:5.0
-    container_name: mongodb
-    ports:
-      - "27017:27017"
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+volumes:
+  chat-data:
+  chat-config:
+  courses-data:
+  courses-config:
