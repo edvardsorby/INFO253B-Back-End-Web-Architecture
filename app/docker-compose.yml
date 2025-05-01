@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - VOYAGE_API_KEY=${VOYAGE_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - MONGO_URI_COURSES=${MONGO_URI_COURSES}
+      - MONGO_URI_CHAT=${MONGO_URI_CHAT}
+      - LANGSMITH_TRACING=${LANGSMITH_TRACING}
+      - LANGSMITH_PROJECT=${LANGSMITH_PROJECT}
+      - LANGSMITH_API_KEY=${LANGSMITH_API_KEY}
+      - LANGSMITH_ENDPOINT=${LANGSMITH_ENDPOINT}
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:5.0
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
