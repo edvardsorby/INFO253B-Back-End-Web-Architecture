@@ -17,7 +17,7 @@ from search.services.course_search import retrieve_courses_tool
 # Define graph components
 #############
 
-_llm = ChatOpenAI(model="gpt-4.1-nano")
+_llm = ChatOpenAI(model="gpt-4.1")
 _tools = [retrieve_courses_tool]
 _llm_with_tools = _llm.bind_tools(_tools)
 
