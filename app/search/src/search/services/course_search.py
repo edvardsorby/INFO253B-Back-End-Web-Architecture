@@ -76,8 +76,8 @@ async def retrieve_courses_tool(
                 COURSE_DETAILS_TEMPLATE.format(
                     rank=i,
                     course_number=retrieved_course.course_number,
-                    title=(
-                        f"{retrieved_course.retrieved_course_title}: {retrieved_course.special_title}"
+                    full_title=(
+                        f"{retrieved_course.course_title}: {retrieved_course.special_title}"
                         if retrieved_course.special_title
                         else retrieved_course.course_title
                     ),
