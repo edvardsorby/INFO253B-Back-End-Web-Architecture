@@ -5,11 +5,12 @@ FROM python:3.12-slim
 WORKDIR /app
 
 # Copy the application files into the container
-COPY . /app
+COPY . .
+
+WORKDIR /app/search
 
 # Install dependencies
 RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt && \
     pip install --no-cache-dir .
 
 # Expose the port the app runs on
