@@ -1,6 +1,6 @@
 from bson import ObjectId
 from pymongo import AsyncMongoClient
-from search.models import Course
+from search.models import Course, CourseUpdate
 
 
 async def get_course(id: str, db: AsyncMongoClient) -> Course:
@@ -16,8 +16,8 @@ async def add_course(course: Course, db: AsyncMongoClient) -> Course:
         **course.model_dump()
     }
 
-async def update_course(id: str, course: Course, db: AsyncMongoClient) -> Course:
-    updated = await db.find_one_and_update({"_id": ObjectId(id)}, {"$set": course.model_dump()}, return_document=True)
+async def update_course(id: str, course: CourseUpdate, db: AsyncMongoClient) -> Course:
+    updated = await db.find_one_and_update({"_id": ObjectId(id)}, {"$set": course.model_dump(exclude_unset=True)}, return_document=True)
     if updated:
         updated["_id"] = str(updated["_id"])
     return updated
