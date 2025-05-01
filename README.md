@@ -34,3 +34,5 @@ uvicorn src.search.main:app --reload
 ```
 
 Then go to /docs
+
+To use LangSmith locally for testing and debugging, you'll want to create your own project and API key.

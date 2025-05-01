@@ -11,16 +11,23 @@ COURSE_DETAILS_TEMPLATE = """\
 Retrieved Course #{rank}:
 
 Course Title:
-{number} {title}
+{department}{course_number}: {full_title}
+{instructor}{term_name}
 
-Course Description:
-{description}
+Course Catalog Description:
+{catalog_description}
+
+Class Description:
+{class_description}
+
+URL:
+{url}
 
 Dot product similarity score:
 {score}"""
 
 
-async def retrieve_courses(query: str, db: AsyncMongoClient):
+async def retrieve_courses(query: str, db: AsyncMongoClient) -> list[SearchOut]:
     vo = voyageai.Client()
     query_embed = vo.embed(
         query, model="voyage-3-large", input_type="query"
@@ -68,9 +75,20 @@ async def retrieve_courses_tool(
             [
                 COURSE_DETAILS_TEMPLATE.format(
                     rank=i,
-                    number=retrieved_course.number,
-                    title=retrieved_course.title,
-                    description=retrieved_course.description,
+                    course_number=retrieved_course.course_number,
+                    full_title=(
+                        f"{retrieved_course.course_title}: {retrieved_course.special_title}"
+                        if retrieved_course.special_title
+                        else retrieved_course.course_title
+                    ),
+                    instructor=f"{retrieved_course.instructor} "
+                    if retrieved_course.instructor
+                    else "",
+                    catalog_description=retrieved_course.catalog_description,
+                    class_description=retrieved_course.class_description,
+                    url=retrieved_course.url,
+                    department=retrieved_course.department,
+                    term_name=retrieved_course.term_name,
                     score=retrieved_course.score,
                 )
                 for i, retrieved_course in enumerate(retrieved_courses)
