@@ -36,3 +36,16 @@ uvicorn src.search.main:app --reload
 Then go to /docs
 
 To use LangSmith locally for testing and debugging, you'll want to create your own project and API key.
+
+Some more useful commands to get your mongodb instance up and running in local
+
+```bash
+export MONGO_URI_COURSES=mongodb://user:pass@localhost:27019/?directConnection=true
+
+python load_data_to_mongo.py --data-paths berkeley_class_details_fall2024.jsonl berkeley_class_details_spring2025.jsonl
+
+show dbs
+use allcourses
+show collections
+db.allcourses_with_embedding.find().pretty()
+```

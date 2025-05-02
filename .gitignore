@@ -175,3 +175,6 @@ cython_debug/
 
 bt_courses.csv
 bt_courses.json
+
+app/search/src/search/utils/berkeley_class_details_fall2024.jsonl
+app/search/src/search/utils/berkeley_class_details_spring2025.jsonl
