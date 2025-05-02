@@ -12,8 +12,9 @@ def individual_serial(course) -> dict:
         "catalog_description": course["catalog_description"],
         "class_description": course["class_description"],
         "location": course["location"],
-        "embedding": course["embedding"]
+        "embedding": course["embedding"],
     }
+
 
 def list_serial(courses) -> list:
     return [individual_serial(course) for course in courses]

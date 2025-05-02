@@ -1,4 +1,3 @@
-from typing import Optional
 from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict
@@ -42,17 +41,18 @@ class MessagesOut(BaseModel):
     response: str
     conv_id: UUID
 
+
 class CourseUpdate(BaseModel):
-    url: Optional[str] = None
-    term_name: Optional[str] | None = None
-    department: Optional[str] | None = None
-    course_number: Optional[str] | None = None
-    section_id: Optional[str] | None = None
-    course_title: Optional[str] | None = None
-    special_title: Optional[str] | None = None
-    instructor: Optional[str] | None = None
-    catalog_description: Optional[str] | None = None
-    class_description: Optional[str] | None = None
-    location: Optional[str] | None = None
+    url: str | None = None
+    term_name: str | None | None = None
+    department: str | None | None = None
+    course_number: str | None | None = None
+    section_id: str | None | None = None
+    course_title: str | None | None = None
+    special_title: str | None | None = None
+    instructor: str | None | None = None
+    catalog_description: str | None | None = None
+    class_description: str | None | None = None
+    location: str | None | None = None
 
     model_config = ConfigDict(extra="forbid")

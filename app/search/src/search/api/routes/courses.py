@@ -13,21 +13,28 @@ router = APIRouter(tags=["courses"])
 async def search(query: str, db: Database) -> list[SearchOut]:
     return await retrieve_courses(query, db)
 
+
 @router.get("/{id}")
-async def get(id: str, db: Database, user=Depends(require_admin)):
+async def get(id: str, db: Database, _user=Depends(require_admin)):
     return await get_course(id, db)
 
+
 @router.post("")
-async def post(course: Course, db: Database, user=Depends(require_admin)):
+async def post(course: Course, db: Database, _user=Depends(require_admin)):
     return await add_course(course, db)
 
+
 @router.put("/{id}")
-async def update(id: str, course: CourseUpdate, db: Database, user=Depends(require_admin)):
+async def update(
+    id: str, course: CourseUpdate, db: Database, _user=Depends(require_admin)
+):
     return await update_course(id, course, db)
 
+
 @router.delete("/{id}")
-async def delete(id: str, db: Database, user=Depends(require_admin)):
+async def delete(id: str, db: Database, _user=Depends(require_admin)):
     return await delete_course(id, db)
+
 
 # Example use:
 # Include Authorization header with JWT token in the request
